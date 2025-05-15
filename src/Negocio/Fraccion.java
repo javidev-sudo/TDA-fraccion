@@ -9,6 +9,7 @@ package Negocio;
  * @author javi24
  */
 public class Fraccion {
+    
     int nume;
     int denom;
     
@@ -33,9 +34,9 @@ public class Fraccion {
     
     // getters estos me devuelven un resultado
     
-    public int getNumera()
+    public int getNumera() // sin signo
     {
-        return nume;
+        return Math.abs(nume);
     }
     public int getDenomi()
     {
@@ -44,23 +45,44 @@ public class Fraccion {
     
     public char getSigno()
     {
-       char signo = (nume >= 0)? '+': '-';
-       return signo;
+       if(nume >= 0)
+       {
+           return '+';
+       }
+       else
+       {
+           return '-';
+       }
     }
     
     // setters
     
-    public void setNumera(int numerador)
+    public void setNumera(int numerador) // solo cambia el numerador el signo lo mantiene
     {
-       nume = (nume>=0)? numerador: -numerador;
+       if(this.nume >= 0)
+       {
+           this.nume = numerador;
+       }
+       else
+       {
+           this.nume = -numerador;
+       }
     }
+    
     public void setDenomi(int denominador)
     {
-       this.denom = denominador; 
+       this.denom = denominador;
     }
     public void setSigno(char signo)
     {
-       this.nume = (signo == '+')? +Math.abs(nume): -Math.abs(nume);
+       if(signo == '+')
+       {
+           this.nume = Math.abs(nume);
+       }
+       else
+       {
+           this.nume = -Math.abs(nume);
+       }
     }
     
     // operaciones
@@ -82,7 +104,7 @@ public class Fraccion {
               u = v;
               v = z;
            }
-           return u;
+           return (u);
        }
     }
     public void simplificar()
@@ -95,28 +117,28 @@ public class Fraccion {
     public void Suma(Fraccion A, Fraccion B)
     {
         this.denom = A.getDenomi() * B.getDenomi();
-        this.nume = (B.getDenomi() * A.getNumera()) + (A.getDenomi()*B.getNumera());
-        this.simplificar(); 
+        this.nume = (A.nume * B.getDenomi()) + (A.getDenomi() * B.nume);
+        this.simplificar();
     }
     
     public void Resta(Fraccion A, Fraccion B)
     {
         this.denom = A.getDenomi() * B.getDenomi();
-        this.nume = (B.getDenomi() * A.getNumera()) - (A.getDenomi()*B.getNumera());
-        this.simplificar(); 
+        this.nume = (A.nume * B.getDenomi()) + (A.getDenomi() * B.nume);
+        this.simplificar();
     }
     
     public void Multiplicacion(Fraccion A, Fraccion B)
     {
         this.denom = A.getDenomi() * B.getDenomi();
-        this.nume = A.getNumera() * B.getNumera();
+        this.nume = A.nume * B.nume;
         this.simplificar(); 
     }
     
     public void Division(Fraccion A, Fraccion B)
     {
-        nume = A.getNumera() * B.getDenomi();
-        denom = A.getDenomi() * B.getNumera();
+        nume = A.nume * B.denom;
+        denom = A.denom * B.nume;
         if(denom < 0)
         {
            nume = nume * -1;
